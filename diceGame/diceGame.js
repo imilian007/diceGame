@@ -1,78 +1,103 @@
 runGame();
 
+function runGame()
+{
+	let baseHealth = 20;
+
+	let baseGold = 20;
+
+	let startingSides = 4;
+
+	let rounds = 0;
+
+	playerOne = createPlayer(baseHealth, startingSides);
+
+	playerTwo = createPlayer(baseHealth, startingSides);
+
+	while(playerOne[1] < 30 && playerTwo[1] < 30)
+	{
+		battle(playerOne, playerTwo);
+
+		let winner = determineWinner(playerOne, playerTwo);
+
+		victoryGold = victoryGoldValue(rounds, baseGold);
+
+		if(winner === 1){
+			playerOne = distributeGold(playerOne, victoryGold);
+		}
+		else if(winner === 2){
+			playerTwo = distributeGold(playerTwo, victoryGold);
+		}
+
+		rounds++;
+
+		playerOne = merchant(playerOne, rounds, baseHealth);
+		playerTwo = merchant(playerTwo, rounds, baseHealth);
+	}
+
+	displayChampion(playerOne, playerTwo);
+}
+
+function createPlayer(baseHealth, dieSides, gold = 0)
+{
+	let player = [baseHealth, dieSides, gold];
+	return player;
+}
+
+
+function battle(playerOne, playerTwo)
+{
+	while(playerOne[0] > 0 && playerTwo[0] > 0)
+	{
+		let damage = rollDie(playerOne[1], "Player one rolls the die");
+
+		playerTwo[0] = damagePlayer(playerTwo[0], damage);
+
+		damage = rollDie(playerTwo[1], "Player two rolls the die");
+
+		playerOne[0] = damagePlayer(playerOne[0], damage);
+
+		displayHealth("Your respective health is:", playerOne[0], playerTwo[0]);
+	}
+}
 
 function rollDie(sides, message)
 {
-	alert(message);
+	console.log(message);
 
 	let result = Math.floor(Math.random() * sides) + 1;
 	return result;
 }
 
-function createPlayer(baseHealth, rounds, dieSides, gold)
+function damagePlayer(health, rollResult)
 {
-	let playerHealth = [baseHealth + (rounds * 2), dieSides];
-	return playerHealth;
-}
-
-function damagePlayer(player, rollResult)
-{
-	let playerHealth = player - rollResult;
-	return playerHealth;
-}
-
-function healPlayer(player, rollResult)
-{
-	let playerHealth = player + rollResult;
+	let playerHealth = health - rollResult;
 	return playerHealth;
 }
 
 function displayHealth(message, playerOneHealth, playerTwoHealth)
 {
-	alert(message + playerOneHealth + playerTwoHealth);
-}
-
-function increaseDieSides(sides)
-{
-	let dieSides;
-	if(sides < 12)
-	{
-		dieSides = sides + 2;
-	}
-	else
-	{
-		dieSides = sides + 8;
-	}
-
-	return dieSides;
+	console.log(message + playerOneHealth + " and " + playerTwoHealth);
 }
 
 function determineWinner(playerOne, playerTwo)
 {
 	let winner;
 
-	if(playerOne[0] > playerTwo[0])
+	if(playerOne[0] > 0)
 	{
 		winner = 1;
 	}
-	else
+	else if(playerTwo[0] > 0)
 	{
 		winner = 2;
 	}
-
-	return winner;
-}
-
-function distributeGold(winner, playerOne, playerTwo, victoryGold)
-{
-	if(winner == 1)
-	{
-		playerOne[2] = playerOne[2] + victoryGold;
-	}
 	else
 	{
-		playerTwo[2] = playerTwo[2] + victoryGold;
+		
 	}
+
+	return winner;
 }
 
 function victoryGoldValue(rounds, baseGold)
@@ -81,57 +106,53 @@ function victoryGoldValue(rounds, baseGold)
 	return victoryGold;
 }
 
-function battle(playerOne, playerTwo)
+function distributeGold(player, victoryGold)
 {
-	while(playerOne[0] > 0 && playerTwo[0] > 0)
-	{
+	player[2] = player[2] + victoryGold;
 
-		let damage = rollDie(playerOne[1], "playerOne: hit enter to roll your die");
-
-		playerTwo[0] = damagePlayer(playerTwo[0], damage);
-
-		damage = rollDie(playerTwo[1], "Player two: hit enter to roll your die");
-
-		playerOne[0] = damagePlayer(playerOne[0], damage);
-
-		displayHealth("Your respective health is:", playerOne[0], playerTwo[0]);
-	}
+	return player;
 }
 
-function runGame()
+function merchant(player, rounds, baseHealth)
 {
-	let baseHealth = 20;
-
-	let baseGold = 20
-
-	let sides = 6
-
-	let rounds = 0
-
-	let playerGold = 0
-
-	let goldValue;
-
-	let winner;
-
-	playerOne = createPlayer(baseHealth, rounds, sides, playerGold);
-
-	playerTwo = createPlayer(baseHealth, rounds, sides, playerGold);
-
-	while(sides < 30)
+	if(player[2] > 30 && player[2] < 69)
 	{
-		battle(playerOne, playerTwo);
-
-		winner = determineWinner(playerOne[0], playerTwo[0]);
-
-		victoryGoldValue(rounds, baseGold);
-
-		distributeGold(winner, playerOne, playerTwo, rounds);
-
-		sides = sides + 2;
+		player[1] = 6;
 	}
+	else if(player[2] > 70 && player[2] < 109)
+	{
+		player[1] = 8;
+	}
+	else if(player[2] > 110 && player[2] < 139)
+	{
+		player[1] = 10;
+	}
+	else if(player[2] > 140 && player[2] < 169)
+	{
+		player[1] = 12;
+	}
+	else if(player[2] > 170 && player[2] < 229)
+	{
+		player[1] = 20;
+	}
+	else if(player[2] > 230)
+	{
+		player[1] = 30;
+	}
+	else
+	{
+
+	}
+
+	player[0] = baseHealth;
+	return player;
 }
 
-
-
-
+function displayChampion(playerOne, playerTwo){
+		if(playerTwo[1] > playerOne[1]){
+		console.log("player two is the winner!")
+	}
+	else{
+		console.log("player one is the winner!")
+	}
+}
