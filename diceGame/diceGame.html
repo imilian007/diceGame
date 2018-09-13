@@ -6,8 +6,58 @@
 	<title>
 		Advetnure Dice
 	</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="diceGame.css">
 </head>
 
 <body>
+
+	<div class = "container">
+		<div class= "row">
+			<div class= "col">
+				<center><h1>Adventure Dice</h1></center>
+			</div>
+		</div>
+	</div>
+
+
+	<div class= "container">
+		<div class= "row">
+			<div = "col">
+				<table>
+					<tr>
+						<th><center>player 1</center></th>
+						<th><center>player 2</center></th>
+					</tr>
+					<tr>
+						<td>
+							<center><img class="player-img" src="images/playerOne.png"></center>
+						</td>
+						<td>
+							<center><img class="player-img" src="images/playerTwo.png"></center>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<center><button class="primary" onclick="playerOneTurn()">Roll</button></center>
+						</td>	
+						<td>
+							<center><button class="primary" onclick="playerTwoTurn()">Roll</button></center>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<div class= "container">
+		<div class= "row">
+			<div class= "col">
+				<center>
+				Battle your opponent to attain the 24 sided die and defeat him for good. To battle, take turns clicking your respective 'roll' buttons.
+				</center>
+			</div>
+		</div>
+	</div>
 	<script type="text/javascript" src = "diceGame.js" ></script>
 </body>

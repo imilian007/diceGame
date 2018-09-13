@@ -1,158 +1,147 @@
-runGame();
+let startingHealth = 20;
 
-function runGame()
+let baseGold = 20;
+
+let startingSides = 4;
+
+let rounds = 0;
+
+let isMarket = false;
+
+let playerOne = createPlayer(startingHealth, startingSides);
+
+let playerTwo = createPlayer(startingHealth, startingSides);
+
+function createPlayer(health, sides, gold = 0)
 {
-	let baseHealth = 20;
+	let player = [health, sides, gold];
 
-	let baseGold = 20;
+	return player;
+}
 
-	let startingSides = 4;
+function playerOneTurn()
+{
+	let result = Math.floor(Math.random() * playerOne[1]) + 1;
 
-	let rounds = 0;
+	playerTwo[0] -= result;
 
-	playerOne = createPlayer(baseHealth, startingSides);
+	console.log("player two: " +playerTwo[0]);
 
-	playerTwo = createPlayer(baseHealth, startingSides);
+	if(playerTwo[0] <= 0){
+		console.log("Player two has fainted")
+		playerOne = distributeGold(playerOne);
+		healPlayers(playerOne, playerTwo);
+		rounds ++;
 
-	while(playerOne[1] < 30 && playerTwo[1] < 30)
+		if(playerOne[1] === 28){
+			console.log("Player One attained the 24 sided die and defeated player two! He is the Champion!");
+			location.reload();
+		}
+
+		if(playerOne[2] > 20 && playerOne[2] < 40)
+		{
+			playerOne[1] += 2;
+			console.log("Player one now has a " + playerOne[1] + " sided die")
+		}
+		else if(playerOne[2] > 40 && playerOne[2] < 60)
+		{
+			playerOne[1] += 2;
+			console.log("Player one now has a " + playerOne[1] + " sided die")
+		}
+		else if(playerOne[2] > 60 && playerOne[2] < 80)
+		{
+			playerOne[1] += 2;
+			console.log("Player one now has a " + playerOne[1] + " sided die")
+		}
+		else if(playerOne[2] > 80 && playerOne[2] < 100)
+		{
+			playerOne[1] += 2;
+			console.log("Player one now has a " + playerOne[1] + " sided die")
+		}
+		else if(playerOne[2] > 100 && playerOne[2] < 120)
+		{
+			playerOne[1] += 2;
+			console.log("Player one now has a " + playerOne[1] + " sided die")
+		}
+		else if(playerOne[2] > 120)
+		{
+			playerOne[1] += 8;
+			console.log("Player one now has a " + playerOne[1] + " sided die")
+		}
+		else
+		{
+		}
+	}
+	else
 	{
-		battle(playerOne, playerTwo);
+	}
+}
+function playerTwoTurn()
+{
+	let result = Math.floor(Math.random() * playerTwo[1]) + 1;
 
-		let winner = determineWinner(playerOne, playerTwo);
+	playerOne[0] -= result;
 
-		victoryGold = victoryGoldValue(rounds, baseGold);
+	console.log("player one: " + playerOne[0]);
 
-		if(winner === 1){
-			playerOne = distributeGold(playerOne, victoryGold);
-		}
-		else if(winner === 2){
-			playerTwo = distributeGold(playerTwo, victoryGold);
-		}
-
+	if(playerOne[0] <= 0){
+		console.log("Player one has fainted")
+		playerTwo = distributeGold(playerTwo);
+		healPlayers(playerOne, playerTwo);
 		rounds++;
 
-		playerOne = merchant(playerOne, rounds, baseHealth);
-		playerTwo = merchant(playerTwo, rounds, baseHealth);
-	}
+		if(playerTwo[1] === 8){
+			console.log("Player Two attained the 24 sided die and defeated player one! He is the Champion!");
+			location.reload();
+		}
 
-	displayChampion(playerOne, playerTwo);
-}
-
-function createPlayer(baseHealth, dieSides, gold = 0)
-{
-	let player = [baseHealth, dieSides, gold];
-	return player;
-}
-
-
-function battle(playerOne, playerTwo)
-{
-	while(playerOne[0] > 0 && playerTwo[0] > 0)
-	{
-		let damage = rollDie(playerOne[1], "Player one rolls the die");
-
-		playerTwo[0] = damagePlayer(playerTwo[0], damage);
-
-		damage = rollDie(playerTwo[1], "Player two rolls the die");
-
-		playerOne[0] = damagePlayer(playerOne[0], damage);
-
-		displayHealth("Your respective health is:", playerOne[0], playerTwo[0]);
-	}
-}
-
-function rollDie(sides, message)
-{
-	console.log(message);
-
-	let result = Math.floor(Math.random() * sides) + 1;
-	return result;
-}
-
-function damagePlayer(health, rollResult)
-{
-	let playerHealth = health - rollResult;
-	return playerHealth;
-}
-
-function displayHealth(message, playerOneHealth, playerTwoHealth)
-{
-	console.log(message + playerOneHealth + " and " + playerTwoHealth);
-}
-
-function determineWinner(playerOne, playerTwo)
-{
-	let winner;
-
-	if(playerOne[0] > 0)
-	{
-		winner = 1;
-	}
-	else if(playerTwo[0] > 0)
-	{
-		winner = 2;
+		if(playerTwo[2] > 20 && playerTwo[2] < 40)
+		{
+			playerTwo[1] += 2;
+			console.log("Player two now has a " + playerTwo[1] + " sided die")
+		}
+		else if(playerTwo[2] > 40 && playerTwo[2] < 60)
+		{
+			playerTwo[1] += 2;
+			console.log("Player two now has a " + playerTwo[1] + " sided die")
+		}
+		else if(playerTwo[2] > 60 && playerTwo[2] < 80)
+		{
+			playerTwo[1] += 2;
+			console.log("Player two now has a " + playerTwo[1] + " sided die")
+		}
+		else if(playerTwo[2] > 80 && playerTwo[2] < 100)
+		{
+			playerTwo[1] += 2;
+			console.log("Player two now has a " + playerTwo[1] + " sided die")
+		}
+		else if(playerTwo[2] > 100 && playerTwo[2] < 120)
+		{
+			playerTwo[1] += 2;
+			console.log("Player two now has a " + playerTwo[1] + " sided die")
+		}
+		else if(playerTwo[2] > 120)
+		{
+			playerTwo[1] += 8;
+			console.log("Player two now has a " + playerTwo[1] + " sided die")
+		}
+		else
+		{
+		}
 	}
 	else
 	{
-		
 	}
-
-	return winner;
 }
 
-function victoryGoldValue(rounds, baseGold)
+function distributeGold(player) 
 {
-	victoryGold = baseGold + rounds * 2;
-	return victoryGold;
-}
-
-function distributeGold(player, victoryGold)
-{
-	player[2] = player[2] + victoryGold;
-
+	player[2] += baseGold + (rounds);
 	return player;
 }
 
-function merchant(player, rounds, baseHealth)
+function healPlayers(playerOne, playerTwo)
 {
-	if(player[2] > 30 && player[2] < 69)
-	{
-		player[1] = 6;
-	}
-	else if(player[2] > 70 && player[2] < 109)
-	{
-		player[1] = 8;
-	}
-	else if(player[2] > 110 && player[2] < 139)
-	{
-		player[1] = 10;
-	}
-	else if(player[2] > 140 && player[2] < 169)
-	{
-		player[1] = 12;
-	}
-	else if(player[2] > 170 && player[2] < 229)
-	{
-		player[1] = 20;
-	}
-	else if(player[2] > 230)
-	{
-		player[1] = 30;
-	}
-	else
-	{
-
-	}
-
-	player[0] = baseHealth;
-	return player;
-}
-
-function displayChampion(playerOne, playerTwo){
-		if(playerTwo[1] > playerOne[1]){
-		console.log("player two is the winner!")
-	}
-	else{
-		console.log("player one is the winner!")
-	}
+	playerOne[0] = startingHealth;
+	playerTwo[0] = startingHealth;
 }
